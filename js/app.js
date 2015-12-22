@@ -1,4 +1,6 @@
-
+/*
+	Commente régulèrement ton code.
+*/
 $(document).ready(function(){
 	compteur();
 	$('form').on("submit", function(event){
@@ -6,7 +8,14 @@ $(document).ready(function(){
 		var utilisateur = $('input[name=recherche]').val();
 		if (utilisateur !== '') {
 			$('input[name=recherche]').val('');
-			$('#toDoList').prepend('<div class="list"><input type="checkbox" class="selected"><button class="croix">x</button>' + utilisateur + '</div>');
+
+			// La ligne est trop longue et ce n'est pas lisible
+			// Décompose, tu gagneras du temps si tu dois modifier un élément plus tard
+			var newElmt = '<div class="list">'
+			+ '<input type="checkbox" class="selected">'
+			+ '<button class="croix">x</button>' + utilisateur + '</div>';
+
+			$('#toDoList').prepend(newElmt);
 		}	
 		
 		compteur();
@@ -18,6 +27,7 @@ $(document).ready(function(){
 		compteur();
 	});
 
+	// bien les commentaires :)
 	$('#all').click(function(){ // Tout montrer
 		$('.list').show();
 	});
@@ -43,20 +53,28 @@ $(document).ready(function(){
 		compteur();
 	});
 
+	// Mets cette fonction dans la même portée (scope).
+	// Ca t'évitera des erreurs plus tard quand ton code
+	// sera plus complexe.
+	function compteur () {
+		// tu peux faire plus court : 
+
+		var compte = $('.list:not(.done)').length;
+
+		var debut = compte + " " + "Item";
+		var fin = " left";
+
+		if (compte>1) {
+			debut = debut + "s";
+		}
+		$('#compte').text(debut + fin);
+	}
+
 
 });
 
 
 
 
-function compteur () {
 
-		var compte = $('.list:not(.done)').length;
-		if (compte>1) {
-			$('#compte').text(compte + " " + "Items left");
-		} 
-		else {
-			$('#compte').text(compte + " " + "Item left");
-		}
-}
 
